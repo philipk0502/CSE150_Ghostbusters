@@ -273,10 +273,6 @@ class ParticleFilter(InferenceModule):
                 if partsLeft > 0:
                     self.particleList.append(p)
                     partsLeft = partsLeft - 1
-        
-        
-
-
 
     def observe(self, observation, gameState):
         """
@@ -351,7 +347,14 @@ class ParticleFilter(InferenceModule):
         a belief distribution.
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        # allPossible = util.Counter()
+        particleSample = list()
+
+        for p in self.particleList:
+            newPosDist = self.getPositionDistribution(self.setGhostPosition(gameState, p))
+            particleSample.append(util.sample(newPosDist))
+
+        self.particleList = particleSample
 
     def getBeliefDistribution(self):
         """
